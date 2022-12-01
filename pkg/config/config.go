@@ -28,8 +28,7 @@ func Setup() {
 			Path: "/Users/mtalhakrc/go/github.com/haytek-uni-bot-yeniden/pkg/database/deneme.db",
 		},
 		Bot: BotConfig{
-			//ID:        "5325031941:AAHSdWLZKX-2yobRnXIW9rRUH64tDObEEsc", //sıtacer bot
-			ID:        "5714183726:AAGIc7aijlKxXzV8fTeimJZWUPYOMeAWTRk", //test bot
+			ID:        "5714183726:AAGIc7aijlKxXzV8fTeimJZWUPYOMeAWTRk", //talha test bot
 			DebugMode: false,
 		},
 		Sheets: SheetsServiceConfig{
@@ -38,9 +37,10 @@ func Setup() {
 	}
 
 	if os.Getenv("IS_DEVELOPMENT") == "true" {
-		cfg.Bot.ID = "5325031941:AAHSdWLZKX-2yobRnXIW9rRUH64tDObEEsc"
+		cfg.Bot.ID = "5325031941:AAHSdWLZKX-2yobRnXIW9rRUH64tDObEEsc" //sıtacer bot
 		cfg.Bot.DebugMode = true
-		cfg.Database.Path = ""
+		cfg.Database.Path = "/home/ubuntu/haytek-uni.db"
+		cfg.Sheets.CredentialsPath = "/home/ubuntu/credentials/fluted-ranger-364116-ea4e986f9ca1.json"
 	}
 }
 

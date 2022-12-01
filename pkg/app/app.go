@@ -155,6 +155,7 @@ func (s ScheduledMap) RegisterScheduled(timestr string, handler ScheduledHandler
 }
 
 // her bir task için &bot göndermek mantıklı olmayabilir ama bakalım.
+//bide burası yine aduket oldu ya
 
 func startTask(t time.Time, handler ScheduledHandler, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(0, "")
@@ -171,6 +172,7 @@ func startTask(t time.Time, handler ScheduledHandler, bot *tgbotapi.BotAPI) {
 				} else {
 					msg.Text = result.Result
 				}
+
 				if _, err := bot.Send(msg); err != nil {
 					log.Println(err)
 					continue
