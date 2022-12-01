@@ -67,6 +67,7 @@ func (app *App) Start() {
 	//var m model.Session
 	var err error
 	var str string
+	log.Println("listening for updates")
 	updates := app.Bot.GetUpdatesChan(u)
 	for update := range updates {
 

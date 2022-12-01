@@ -15,7 +15,7 @@ func New(config config.BotConfig) {
 		panic(err)
 	}
 	bot.Debug = config.DebugMode
-	log.Println("bor instance initialized")
+	log.Println("bot instance initialized")
 }
 
 func Get() *tgbotapi.BotAPI {

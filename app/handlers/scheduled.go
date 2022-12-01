@@ -54,7 +54,7 @@ func (u ScheduledHandler) GunlukRaporMesaji() []app.ScheduledResponse {
 	str := gunlukRaporFormat(gunlukRapor, kisierrs)
 	return []app.ScheduledResponse{
 		{
-			UserID: 952363491, //todo talha karaca
+			UserID: -1001721260016, //haytek uni
 			Result: str,
 			Error:  nil,
 		},

@@ -25,14 +25,14 @@ type BotConfig struct {
 func Setup() {
 	cfg = &Config{
 		Database: DbConfig{
-			Path: "/Users/mtalhakrc/go/github.com/haytek-uni-bot-yeniden/pkg/database/deneme.db",
+			Path: "/Users/talha/go/src/github.com/haytek-uni-bot-yeniden/pkg/database/deneme.db",
 		},
 		Bot: BotConfig{
 			ID:        "5714183726:AAGIc7aijlKxXzV8fTeimJZWUPYOMeAWTRk", //talha test bot
 			DebugMode: false,
 		},
 		Sheets: SheetsServiceConfig{
-			CredentialsPath: "/Users/mtalhakrc/go/github.com/haytek-uni-bot-yeniden/credentials/fluted-ranger-364116-ea4e986f9ca1.json",
+			CredentialsPath: "/Users/talha/go/src/github.com/haytek-uni-bot-yeniden/credentials/fluted-ranger-364116-ea4e986f9ca1.json",
 		},
 	}
 

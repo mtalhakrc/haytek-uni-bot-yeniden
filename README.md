@@ -4,7 +4,7 @@ haytek sıtacer üni çetele kontrolü yapar.
 
 ### sunucuya dosya gönderme
 
-scp -i ~/.ssh/cetele.pem -r /Users/talha/go/src/github.com/haytek-uni-cetele-kontrol/main ubuntu@3.89.107.238:/home/ubuntu
+scp -i ~/.ssh/cetele.pem -r /Users/talha/go/src/github.com/haytek-uni-bot-yeniden/pkg/database/haytek-uni.db ubuntu@3.89.107.238:/home/ubuntu
 
 ### linux exe çıktısı
 
