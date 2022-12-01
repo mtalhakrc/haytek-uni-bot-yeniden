@@ -26,7 +26,7 @@ func New(config config.DbConfig) {
 	if db.Ping() != nil {
 		panic(err)
 	}
-	log.Println("init db")
+	log.Println("db initialized")
 }
 
 func Get() *bun.DB {

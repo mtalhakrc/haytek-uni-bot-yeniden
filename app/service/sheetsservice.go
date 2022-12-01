@@ -7,6 +7,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 	"io"
+	"log"
 	"os"
 )
 
@@ -25,6 +26,7 @@ func InitSheetsService(c config.SheetsServiceConfig) {
 	if err != nil {
 		panic(err)
 	}
+	log.Println("sheet service initialized")
 }
 func Get() *sheets.Service {
 	return srv
