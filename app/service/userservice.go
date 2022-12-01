@@ -38,9 +38,10 @@ func (s UserService) GetByUserName(ctx context.Context, name string) (model.User
 }
 func (s UserService) GetAdminsNames(ctx context.Context) ([]string, error) {
 	var res []string
-	err := s.Db.NewSelect().Model(&model.User{}).Where("type = 10").Column("name").Scan(ctx, &res)
+	err := s.Db.NewSelect().Model(&model.User{}).Where("type = ?", model.UserTypeAdmin).Column("name").Scan(ctx, &res)
 	return res, err
 }
+
 func NewUserService(db *bun.DB) IUserService {
 	return UserService{
 		Db: db,

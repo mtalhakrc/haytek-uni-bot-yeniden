@@ -34,7 +34,10 @@ Her gün 11:00 da kişilere erken kontrol mesajı gönderir.
 Her gün 01:00 da çetele kontrolü yapar raporun çıktısını gönderir ve kaydeder.
 `, nil
 }
-func (s CeteleHandler) GetSpecific(ctx *app.Ctx, params []string) (string, error) {
+func (s CeteleHandler) GetSpecificRecord(ctx *app.Ctx, params []string) (string, error) {
+	if !s.IsAdmin(ctx.SentFrom().ID) {
+		return "", errors.New("bu komut için yetkiniz yok")
+	}
 	if len(params) != 1 {
 		return "", errors.New("komuttan sonra tarih berlirtin(ör: /gunlukozet 10.10.2022)")
 	}
@@ -52,9 +55,13 @@ func (s CeteleHandler) GetSpecific(ctx *app.Ctx, params []string) (string, error
 	return str, nil
 }
 func (s CeteleHandler) GetHaftalikOzet(ctx *app.Ctx, params []string) (string, error) {
+	if !s.IsAdmin(ctx.SentFrom().ID) {
+		return "", errors.New("bu komut için yetkiniz yok")
+	}
 	res, err := s.gunlukRaporService.GetLastWeekRecords()
 	if err != nil {
 		log.Println(err)
+		return "", err
 	}
 	str := haftalikRaporFormat(res)
 	return str, nil
@@ -63,9 +70,9 @@ func (s CeteleHandler) Admins(ctx *app.Ctx, params []string) (string, error) {
 	names, err := s.userService.GetAdminsNames(context.Background())
 	if err != nil {
 		log.Println(err)
+		return "", err
 	}
 	return strings.Join(names, "\n"), err
-
 }
 
 /*
@@ -87,6 +94,7 @@ func haftalikRaporFormat(raporlar []model.GunlukRapor) string {
 	for _, gunlukraporlar := range raporlar {
 		str += fmt.Sprintf("%s - ", utils.GetTarih(gunlukraporlar.Tarih))
 	}
+
 	str += "\n\n"
 
 	//bu hafta yapılmayanları bir gunluk modelde toplayacağım
@@ -123,4 +131,13 @@ func haftalikRaporFormat(raporlar []model.GunlukRapor) string {
 	}
 
 	return str
+}
+
+func (s CeteleHandler) IsAdmin(id int64) bool {
+	user, err := s.userService.GetByUserID(context.Background(), id)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	return user.Type == model.UserTypeAdmin
 }

@@ -26,7 +26,7 @@ func main() {
 	commands.RegisterCommand("start", cetelehandler.Start)
 	commands.RegisterCommand("admins", cetelehandler.Admins)
 
-	commands.RegisterCommand("gunlukozet", cetelehandler.GetSpecific)
+	commands.RegisterCommand("gunlukozet", cetelehandler.GetSpecificRecord)
 	commands.RegisterCommand("haftalikozet", cetelehandler.GetHaftalikOzet)
 
 	scheduled.RegisterScheduled("23:00:00", scheduledHandler.CeteleHatirlatmaMesaji)
