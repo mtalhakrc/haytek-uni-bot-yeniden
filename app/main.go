@@ -22,6 +22,7 @@ func main() {
 
 	commands.RegisterCommand("kaydol", userhandler.Kaydol)
 	commands.RegisterCommand("kayitsil", userhandler.KayitSil)
+	commands.RegisterCommand("makeadmin", userhandler.MakeAdmin)
 
 	commands.RegisterCommand("start", cetelehandler.Start)
 	commands.RegisterCommand("admins", cetelehandler.Admins)

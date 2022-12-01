@@ -3,11 +3,13 @@ package handlers
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/haytek-uni-bot-yeniden/app/service"
 	"github.com/haytek-uni-bot-yeniden/common/model"
 	"github.com/haytek-uni-bot-yeniden/pkg/app"
 	baseservice "github.com/haytek-uni-bot-yeniden/pkg/service"
 	"github.com/uptrace/bun"
+	"log"
 	"strings"
 )
 
@@ -62,4 +64,41 @@ func (u UserHandler) Kaydol(ctx *app.Ctx, params []string) (string, error) {
 func (u UserHandler) KayitSil(ctx *app.Ctx, params []string) (string, error) {
 	err := u.DeleteByUserID(context.Background(), ctx.SentFrom().ID)
 	return "kaydınız başarı ile silindi", err
+}
+
+func (u UserHandler) MakeAdmin(ctx *app.Ctx, params []string) (string, error) {
+	if !u.IsAdmin(ctx.SentFrom().ID) {
+		return "", errors.New("bu komut için yetkiniz bulunmamaktadır")
+	}
+	if len(params) != 1 {
+		return "", errors.New("komuttan sonra bir kişiyi belirtin(ör: /makeadmin @mtalhakrc)")
+	}
+	if params[0][0] != '@' {
+		return "", errors.New("kişinin başında @ işareti olmalıdır")
+	}
+
+	username := strings.Replace(params[0], "@", "", 1)
+	user, err := u.userService.GetByUsername(context.Background(), username)
+	if err != nil {
+		log.Print(err)
+		return "", errors.New("sistemde böyle bir kullanıcı bulunmamaktadır")
+	}
+	fmt.Println(user)
+	user.Type = model.UserTypeAdmin
+	err = u.Update(context.Background(), user)
+	if err != nil {
+		log.Println(err)
+		return "", errors.New("bir hata meydana geldi")
+	}
+	str := fmt.Sprintf("%s kişisi yetkisi admin olarak güncellendi", user.Username)
+	return str, nil
+}
+
+func (u UserHandler) IsAdmin(id int64) bool { //todo burası tekrar etti. bunu ortak hale getir.
+	user, err := u.userService.GetByUserID(context.Background(), id)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	return user.Type == model.UserTypeAdmin
 }

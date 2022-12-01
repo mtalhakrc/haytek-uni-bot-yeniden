@@ -32,6 +32,10 @@ HaytekUni Cetele Kontrol Botu çetele kontrolü yapar.
 Her gün 11:00 da bir hatırlatma mesajı gönderir.
 Her gün 11:00 da kişilere erken kontrol mesajı gönderir.
 Her gün 01:00 da çetele kontrolü yapar raporun çıktısını gönderir ve kaydeder.
+Kaydolmak için: /kaydol {çeteledeki isminiz}
+Kaydınızı silmek için: /kayitsil
+Spesifik bir günün ozeti: /gunlukozet {tarih} (only admin)
+Hafralik ozet: /haftalikozet (only admin)
 `, nil
 }
 func (s CeteleHandler) GetSpecificRecord(ctx *app.Ctx, params []string) (string, error) {
@@ -74,12 +78,6 @@ func (s CeteleHandler) Admins(ctx *app.Ctx, params []string) (string, error) {
 	}
 	return strings.Join(names, "\n"), err
 }
-
-/*
-/admins komutu ile adminlerin listesini görebilirsiniz.
-/gunlukozet $tarih ile spesifik bir günün kaydını (only admin),
-/haftalikozet ile geçen haftanın kaydını görebilirsiniz.(only admin)
-*/
 
 func haftalikRaporFormat(raporlar []model.GunlukRapor) string {
 	var str string

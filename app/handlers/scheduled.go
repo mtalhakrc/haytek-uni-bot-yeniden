@@ -64,7 +64,7 @@ func (u ScheduledHandler) GunlukErkenKontrolMesaji() []app.ScheduledResponse {
 	gunlukrapor, _ := newGunlukRapor(u.sheetsservice, "Bugün Özet")
 	var donecek []app.ScheduledResponse
 	for _, kisisonuc := range gunlukrapor.KisilerSonuc {
-		user, err := u.userService.GetByUserName(context.Background(), kisisonuc.Isim)
+		user, err := u.userService.GetByName(context.Background(), kisisonuc.Isim)
 		if err != nil {
 			log.Println(err)
 			continue

@@ -75,14 +75,3 @@ func NewSheetsService(s *sheets.Service, spreadsheetID string) ISheetsService {
 		spreadsheetID: spreadsheetID,
 	}
 }
-
-//func (s BaseService[T]) GetLastWeekRecords() ([]T, error) {
-//	var m []T
-//	err := s.db.NewSelect().Model(&m).Where("created_at  >= datetime('now', '-6 days')").Scan(context.Background())
-//	return m, err
-//}
-//func (s BaseService[T]) GetSpecificDayRecord(date string) (T, error) {
-//	var m T
-//	err := s.db.NewSelect().Model(&m).Where("created_at >= date(?)", date).Scan(context.Background())
-//	return m, err
-//}

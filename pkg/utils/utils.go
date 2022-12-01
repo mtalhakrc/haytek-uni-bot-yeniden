@@ -24,6 +24,9 @@ func GetSaat(t time.Time) string {
 }
 
 func ParseCommandArguments(params string) []string {
+	if params == "" {
+		return nil
+	}
 	return strings.Split(params, " ")
 }
 

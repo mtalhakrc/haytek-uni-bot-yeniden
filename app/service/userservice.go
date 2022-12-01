@@ -10,7 +10,8 @@ type IUserService interface {
 	GetByUserID(ctx context.Context, id int64) (model.User, error)
 
 	GetAllUserIDs(ctx context.Context) ([]int64, error)
-	GetByUserName(ctx context.Context, name string) (model.User, error)
+	GetByName(ctx context.Context, name string) (model.User, error)
+	GetByUsername(ctx context.Context, username string) (model.User, error)
 
 	GetAdminsNames(ctx context.Context) ([]string, error)
 }
@@ -30,8 +31,13 @@ func (s UserService) GetByUserID(ctx context.Context, id int64) (model.User, err
 	err := s.Db.NewSelect().Model(&u).Where("user_id = ?", id).Scan(ctx)
 	return u, err
 }
+func (s UserService) GetByUsername(ctx context.Context, username string) (model.User, error) {
+	u := model.User{}
+	err := s.Db.NewSelect().Model(&u).Where("username = ?", username).Scan(ctx)
+	return u, err
+}
 
-func (s UserService) GetByUserName(ctx context.Context, name string) (model.User, error) {
+func (s UserService) GetByName(ctx context.Context, name string) (model.User, error) {
 	u := model.User{}
 	err := s.Db.NewSelect().Model(&u).Where("name = ?", name).Scan(ctx)
 	return u, err
