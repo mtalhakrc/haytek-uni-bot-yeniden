@@ -83,10 +83,12 @@ func newGunlukRapor(s service.ISheetsService, range_ string) (model.GunlukRapor,
 	resp, err := s.GetFromSheet(range_)
 	if err != nil {
 		log.Println(err)
+		return model.GunlukRapor{}, []error{err}
 	}
 	kisiler, err := parseKisilerFromSheetResponse(resp)
 	if err != nil {
 		log.Println(err)
+		return model.GunlukRapor{}, []error{err}
 	}
 
 	var kisisonuclar []model.KisiSonuc

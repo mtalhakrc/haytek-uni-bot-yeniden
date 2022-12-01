@@ -159,23 +159,18 @@ func (s ScheduledMap) RegisterScheduled(timestr string, handler ScheduledHandler
 func startTask(t time.Time, handler ScheduledHandler, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(0, "")
 	timer := newTimer(t)
-
 	for {
 		select {
 		case _ = <-timer.C:
-
 			res := handler()
-
 			for _, result := range res {
 				msg.ChatID = result.UserID
-
 				if result.Error != nil {
 					//msg.Text = "bir hata oluştu"
 					msg.Text = result.Error.Error()
 				} else {
 					msg.Text = result.Result
 				}
-
 				if _, err := bot.Send(msg); err != nil {
 					log.Println(err)
 					continue
