@@ -6,6 +6,11 @@ haytek sıtacer üni çetele kontrolü yapar.
 
 scp -i ~/.ssh/cetele.pem -r /Users/talha/go/src/github.com/haytek-uni-bot-yeniden/pkg/database/haytek-uni.db ubuntu@3.89.107.238:/home/ubuntu
 
+## sunucudan dosya al
+scp -i ~/.ssh/cetele.pem -r ubuntu@3.89.107.238:/home/ubuntu/haytek-uni.db /Users/talha/go/src/github.com/haytek-uni-bot-yeniden/
+
+
+
 ### linux exe çıktısı
 
 GOOS=linux GOARCH=amd64 go build main.go

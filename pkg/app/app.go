@@ -123,6 +123,7 @@ func (app *App) StartScheduledJobs() {
 	for t, handler := range app.Scheduled {
 		go startTask(t, handler, app.Bot)
 	}
+	log.Println("initial")
 }
 
 func (commands CommandsMap) RegisterCommand(command string, handler CommandHandler) {

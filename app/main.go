@@ -31,7 +31,7 @@ func main() {
 	commands.RegisterCommand("haftalikozet", cetelehandler.GetHaftalikOzet)
 
 	scheduled.RegisterScheduled("23:00:00", scheduledHandler.CeteleHatirlatmaMesaji)
-	scheduled.RegisterScheduled("00:00:00", scheduledHandler.GunlukErkenKontrolMesaji)
+	scheduled.RegisterScheduled("14:58:00", scheduledHandler.GunlukErkenKontrolMesaji)
 	scheduled.RegisterScheduled("01:00:00", scheduledHandler.GunlukRaporMesaji)
 
 	ceteleapp.Start()

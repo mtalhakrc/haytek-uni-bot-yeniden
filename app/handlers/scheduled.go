@@ -11,6 +11,7 @@ import (
 	"github.com/uptrace/bun"
 	"log"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -64,7 +65,8 @@ func (u ScheduledHandler) GunlukErkenKontrolMesaji() []app.ScheduledResponse {
 	gunlukrapor, _ := newGunlukRapor(u.sheetsservice, "Bugün Özet")
 	var donecek []app.ScheduledResponse
 	for _, kisisonuc := range gunlukrapor.KisilerSonuc {
-		user, err := u.userService.GetByName(context.Background(), kisisonuc.Isim)
+		//sheets service sheet nameler case sensitive değil. bu yüzden lowercase olarak alalım.
+		user, err := u.userService.GetByName(context.Background(), strings.ToLower(kisisonuc.Isim))
 		if err != nil {
 			log.Println(err)
 			continue

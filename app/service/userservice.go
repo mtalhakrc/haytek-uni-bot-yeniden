@@ -39,7 +39,8 @@ func (s UserService) GetByUsername(ctx context.Context, username string) (model.
 
 func (s UserService) GetByName(ctx context.Context, name string) (model.User, error) {
 	u := model.User{}
-	err := s.Db.NewSelect().Model(&u).Where("name = ?", name).Scan(ctx)
+	//sheets service sheet nameler case sensitive değil. bu yüzden lowercase olarak alalım.
+	err := s.Db.NewSelect().Model(&u).Where("lower(name) = ?", name).Scan(ctx)
 	return u, err
 }
 func (s UserService) GetAdminsNames(ctx context.Context) ([]string, error) {
