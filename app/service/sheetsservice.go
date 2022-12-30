@@ -2,26 +2,28 @@ package service
 
 import (
 	"context"
+	_ "embed"
 	"fmt"
 	"github.com/haytek-uni-bot-yeniden/pkg/config"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
-	"io"
 	"log"
-	"os"
 )
 
+//go:embed fluted-ranger-364116-ea4e986f9ca1.json
+var b []byte
 var srv *sheets.Service
 
 func InitSheetsService(c config.SheetsServiceConfig) {
-	f, err := os.Open(c.CredentialsPath)
-	if err != nil {
-		panic(err)
-	}
-	b, err := io.ReadAll(f)
-	if err != nil {
-		panic(err)
-	}
+	//f, err := os.Open(c.CredentialsPath)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//b, err := io.ReadAll(f)
+	//if err != nil {
+	//	panic(err)
+	//}
+	var err error
 	srv, err = sheets.NewService(context.Background(), option.WithCredentialsJSON(b))
 	if err != nil {
 		panic(err)
@@ -66,10 +68,7 @@ func (s ExSheetsService) DeleteFromSheet(range_ string) (*sheets.ClearValuesResp
 }
 func (s ExSheetsService) TestSheetExist(name string) bool {
 	_, err := s.GetFromSheet(fmt.Sprintf("%s!%s", name, "A1"))
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 func NewSheetsService(s *sheets.Service, spreadsheetID string) ISheetsService {
 	return ExSheetsService{

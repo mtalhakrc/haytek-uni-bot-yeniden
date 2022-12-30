@@ -61,8 +61,9 @@ func (u ScheduledHandler) GunlukRaporMesaji() []app.ScheduledResponse {
 		},
 	}
 }
+
 func (u ScheduledHandler) GunlukErkenKontrolMesaji() []app.ScheduledResponse {
-	gunlukrapor, _ := newGunlukRapor(u.sheetsservice, "Bugün Özet")
+	gunlukrapor, _ := newGunlukRapor(u.sheetsservice, "Dün Özet")
 	var donecek []app.ScheduledResponse
 	for _, kisisonuc := range gunlukrapor.KisilerSonuc {
 		//sheets service sheet nameler case sensitive değil. bu yüzden lowercase olarak alalım.

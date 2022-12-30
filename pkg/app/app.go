@@ -70,7 +70,6 @@ func (app *App) Start() {
 	log.Println("listening for updates")
 	updates := app.Bot.GetUpdatesChan(u)
 	for update := range updates {
-
 		//---------------------BURASI AZCIK PROTOTİP ---------
 		//message session al
 		//userid := update.Message.From.ID
@@ -90,11 +89,13 @@ func (app *App) Start() {
 		//}
 		//}
 		//--------------------------------
-
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-		if update.Message == nil || !update.Message.IsCommand() {
+		if update.Message == nil {
 			continue
 		}
+		if !update.Message.IsCommand() {
+			continue
+		}
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 		if !commands.isRegistered(update.Message.Command()) {
 			msg.Text = "command not found"
@@ -162,25 +163,25 @@ func (s ScheduledMap) RegisterScheduled(timestr string, handler ScheduledHandler
 func startTask(t time.Time, handler ScheduledHandler, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(0, "")
 	timer := newTimer(t)
+	var startTime time.Time
 	for {
 		select {
 		case _ = <-timer.C:
+			startTime = time.Now()
 			res := handler()
 			for _, result := range res {
 				msg.ChatID = result.UserID
 				if result.Error != nil {
-					//msg.Text = "bir hata oluştu"
 					msg.Text = result.Error.Error()
 				} else {
 					msg.Text = result.Result
 				}
-
 				if _, err := bot.Send(msg); err != nil {
 					log.Println(err)
 					continue
 				}
 			}
-			timer.Reset(24 * time.Hour)
+			timer.Reset(24*time.Hour - time.Now().Sub(startTime))
 		}
 	}
 }
